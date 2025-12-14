@@ -36,72 +36,72 @@ const features = [
 
 const AboutSection = () => {
   return (
-    <section id="about" className="py-20 bg-secondary/30">
+    <section id="about" className="py-12 sm:py-16 lg:py-20 bg-secondary/30">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Image Side */}
-          <div className="relative animate-fade-up">
-            <div className="relative rounded-2xl overflow-hidden shadow-card">
+          <div className="relative animate-fade-up order-2 lg:order-1">
+            <div className="relative rounded-xl sm:rounded-2xl overflow-hidden shadow-card">
               <img
                 src={aboutLodge}
                 alt="Tree Suites Next Airport Inn exterior"
-                className="w-full h-[500px] object-cover"
+                className="w-full h-[280px] sm:h-[400px] lg:h-[500px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/40 via-transparent to-transparent" />
             </div>
             
             {/* Stats Overlay */}
-            <div className="absolute -bottom-6 -right-6 md:right-6 bg-card rounded-2xl shadow-card p-6 border border-border">
-              <div className="flex gap-8">
+            <div className="absolute -bottom-4 sm:-bottom-6 left-4 right-4 sm:left-auto sm:right-6 bg-card rounded-xl sm:rounded-2xl shadow-card p-4 sm:p-6 border border-border">
+              <div className="flex gap-6 sm:gap-8 justify-center sm:justify-start">
                 <div className="text-center">
-                  <span className="block text-3xl font-bold text-primary font-display">15+</span>
-                  <span className="text-sm text-muted-foreground">Years Experience</span>
+                  <span className="block text-2xl sm:text-3xl font-bold text-primary font-display">15+</span>
+                  <span className="text-xs sm:text-sm text-muted-foreground">Years Experience</span>
                 </div>
                 <div className="w-px bg-border" />
                 <div className="text-center">
-                  <span className="block text-3xl font-bold text-gold font-display">50+</span>
-                  <span className="text-sm text-muted-foreground">Luxury Rooms</span>
+                  <span className="block text-2xl sm:text-3xl font-bold text-gold font-display">50+</span>
+                  <span className="text-xs sm:text-sm text-muted-foreground">Luxury Rooms</span>
                 </div>
               </div>
             </div>
 
             {/* Decorative Element */}
-            <div className="absolute -top-4 -left-4 w-24 h-24 bg-gold/20 rounded-full blur-2xl" />
+            <div className="absolute -top-4 -left-4 w-16 sm:w-24 h-16 sm:h-24 bg-gold/20 rounded-full blur-2xl" />
           </div>
 
           {/* Content Side */}
-          <div className="animate-fade-up" style={{ animationDelay: '0.2s' }}>
-            <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
+          <div className="animate-fade-up order-1 lg:order-2" style={{ animationDelay: '0.2s' }}>
+            <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-primary/10 text-primary rounded-full text-xs sm:text-sm font-medium mb-3 sm:mb-4">
               About Us
             </span>
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 sm:mb-6 leading-tight">
               Your Home Away
               <span className="block text-gold">From Home</span>
             </h2>
-            <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
+            <p className="text-muted-foreground text-sm sm:text-base lg:text-lg mb-4 sm:mb-6 leading-relaxed">
               Tree Suites Next Airport Inn is a premium lodge nestled in the serene embrace of nature, 
               offering the perfect blend of convenience and tranquility. Located just minutes from the 
               airport, we provide weary travelers with a peaceful retreat surrounded by majestic trees 
               and lush greenery.
             </p>
-            <p className="text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-muted-foreground text-sm sm:text-base mb-6 sm:mb-8 leading-relaxed">
               Our commitment to exceptional hospitality, combined with modern amenities and 
               eco-friendly practices, makes us the ideal choice for both business and leisure travelers 
               seeking comfort without compromising on convenience.
             </p>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
               {features.map((feature, index) => (
                 <div
                   key={feature.title}
-                  className="p-4 rounded-xl bg-card shadow-soft hover:shadow-card transition-all duration-300 hover:-translate-y-1 group"
+                  className="p-3 sm:p-4 rounded-lg sm:rounded-xl bg-card shadow-soft hover:shadow-card transition-all duration-300 hover:-translate-y-1 group"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                    <feature.icon className="w-5 h-5 text-primary group-hover:text-primary-foreground" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-2 sm:mb-3 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                    <feature.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary group-hover:text-primary-foreground" />
                   </div>
-                  <h4 className="font-semibold text-foreground text-sm mb-1">{feature.title}</h4>
-                  <p className="text-xs text-muted-foreground">{feature.description}</p>
+                  <h4 className="font-semibold text-foreground text-xs sm:text-sm mb-0.5 sm:mb-1">{feature.title}</h4>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground hidden sm:block">{feature.description}</p>
                 </div>
               ))}
             </div>
