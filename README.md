@@ -1,73 +1,161 @@
-# Welcome to your Lovable project
+# Airport Inn Landing Page
 
-## Project info
+A modern, responsive landing page for Airport Inn with dynamic room booking system.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Features
 
-## How can I edit this code?
+- 🏨 Dynamic room listings with real-time data
+- 📱 Fully responsive design
+- 🔍 Room detail pages with image galleries
+- 📅 Booking system with date selection
+- 🎨 Modern UI with shadcn/ui components
+- ⚡ Fast performance with React Query
+- 🚀 TypeScript for type safety
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- **Frontend**: React 18 + TypeScript + Vite
+- **UI Components**: shadcn/ui + Tailwind CSS
+- **State Management**: TanStack React Query
+- **Routing**: React Router v6
+- **Backend**: Node.js + Express + TypeScript + MySQL
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js (v18 or higher)
+- npm or yarn
+- MySQL (for backend)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### One-Command Setup (Recommended)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. Install all dependencies (frontend + backend):
+```bash
+npm run install:all
+```
 
-Follow these steps:
+2. Setup database and create admin account:
+```bash
+# Configure backend/.env with your database credentials first
+npm run create-admin
+```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+3. Run both frontend and backend together:
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+This will start:
+- Frontend at `http://localhost:8080`
+- Backend at `http://localhost:3000`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Separate Setup (Alternative)
 
-**Use GitHub Codespaces**
+If you prefer to run frontend and backend separately:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+**Frontend:**
+```bash
+npm install
+npm run dev:frontend
+```
 
-## What technologies are used for this project?
+**Backend:**
+```bash
+cd backend
+npm install
+cp .env.example .env
+# Update .env with your database credentials
+npm run dev
+```
 
-This project is built with:
+### Database Setup
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+1. Create the database:
+```sql
+CREATE DATABASE tree_suites_db;
+```
 
-## How can I deploy this project?
+2. Run the schema:
+```bash
+mysql -u root -p tree_suites_db < docs/DATABASE_SCHEMA.sql
+```
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## Project Structure
 
-## Can I connect a custom domain to my Lovable project?
+```
+airport-inn-landing/
+├── src/
+│   ├── components/      # React components
+│   │   ├── ui/         # shadcn/ui components
+│   │   └── ...         # Feature components
+│   ├── pages/          # Page components
+│   │   ├── Index.tsx   # Home page
+│   │   ├── RoomView.tsx # Room detail page
+│   │   └── BookNow.tsx  # Booking page
+│   ├── services/       # API services
+│   └── ...
+├── backend/            # Backend API server
+├── docs/               # Documentation
+└── ...
+```
 
-Yes, you can!
+## Available Routes
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- `/` - Home page with room listings
+- `/room/:id` - Room detail page
+- `/book/:id` - Booking page for a specific room
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Development
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+## Features Overview
+
+### Room Listings
+- Fetches rooms from the backend API
+- Displays room cards with images, prices, and amenities
+- Links to individual room detail pages
+
+### Room Detail Page
+- Shows full room information
+- Image gallery with thumbnail navigation
+- Facilities and amenities list
+- Direct booking button
+
+### Booking Page
+- Date picker for check-in/check-out
+- Guest information form
+- Payment method selection
+- Real-time price calculation
+- Booking confirmation
+
+## API Integration
+
+The frontend communicates with the backend API using the service layer in `src/services/api.ts`. 
+
+Key API endpoints used:
+- `GET /api/rooms` - Fetch all rooms
+- `GET /api/rooms/:id` - Get room details
+- `POST /api/bookings/create` - Create a booking
+
+## Contributing
+
+1. Create a feature branch
+2. Make your changes
+3. Test thoroughly
+4. Submit a pull request
+
+## License
+
+Private project - All rights reserved

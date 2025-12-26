@@ -1,14 +1,23 @@
 import { useState } from 'react';
-import { Menu, X, TreePine, Phone, User } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Menu, X, TreePine, Phone, User, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 interface HeaderProps {
-  onLoginClick: () => void;
-  onRegisterClick: () => void;
+  onLoginClick?: () => void;
+  onRegisterClick?: () => void;
 }
 
 const Header = ({ onLoginClick, onRegisterClick }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isAuthenticated, user, isAdmin, logout } = useAuth();
 
   const navLinks = [
     { name: 'Home', href: '#home' },
@@ -52,13 +61,45 @@ const Header = ({ onLoginClick, onRegisterClick }: HeaderProps) => {
               <span className="text-sm font-medium">+1 234 567 890</span>
             </a>
             <div className="w-px h-6 bg-border mx-2" />
-            <Button variant="ghost" size="sm" onClick={onLoginClick}>
-              <User className="w-4 h-4 mr-1" />
-              Login
-            </Button>
-            <Button variant="gold" size="sm" onClick={onRegisterClick}>
-              Register
-            </Button>
+            {isAuthenticated ? (
+              <>
+                <Link to="/my-bookings">
+                  <Button variant="ghost" size="sm">
+                    My Bookings
+                  </Button>
+                </Link>
+                {isAdmin && (
+                  <Link to="/admin">
+                    <Button variant="outline" size="sm">
+                      Admin Panel
+                    </Button>
+                  </Link>
+                )}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm">
+                      <User className="w-4 h-4 mr-1" />
+                      {user?.full_name || 'User'}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={logout}>
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
+            ) : (
+              <>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/login">Login</Link>
+                </Button>
+                <Button variant="default" size="sm" asChild>
+                  <Link to="/signup">Register</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -85,14 +126,31 @@ const Header = ({ onLoginClick, onRegisterClick }: HeaderProps) => {
                 </a>
               ))}
               <div className="border-t border-border my-2" />
-              <div className="flex gap-2 px-4">
-                <Button variant="outline" className="flex-1" onClick={onLoginClick}>
-                  Login
-                </Button>
-                <Button variant="gold" className="flex-1" onClick={onRegisterClick}>
-                  Register
-                </Button>
-              </div>
+              {isAuthenticated ? (
+                <div className="px-4 space-y-2">
+                  <Link to="/my-bookings">
+                    <Button variant="outline" className="w-full">My Bookings</Button>
+                  </Link>
+                  {isAdmin && (
+                    <Link to="/admin">
+                      <Button variant="outline" className="w-full">Admin Panel</Button>
+                    </Link>
+                  )}
+                  <Button variant="outline" className="w-full" onClick={logout}>
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Logout
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex gap-2 px-4">
+                  <Button variant="outline" className="flex-1" onClick={onLoginClick} asChild>
+                    <Link to="/login">Login</Link>
+                  </Button>
+                  <Button variant="default" className="flex-1" onClick={onRegisterClick} asChild>
+                    <Link to="/signup">Register</Link>
+                  </Button>
+                </div>
+              )}
             </nav>
           </div>
         )}
