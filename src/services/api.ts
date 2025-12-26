@@ -1,7 +1,7 @@
 // Tree Suites Next Airport Inn - API Service
 // Base URL for all API calls
 
-const API_BASE_URL = 'https://api.treesuitesnext.com';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 
 // Types
 export interface User {
@@ -146,6 +146,12 @@ const apiRequest = async <T>(
 // AUTH APIs
 // =============================================
 
+export interface AuthData {
+  token: string;
+  user: User;
+  role?: 'user' | 'admin';
+}
+
 export const authApi = {
   register: async (userData: {
     full_name: string;
@@ -154,17 +160,27 @@ export const authApi = {
     password: string;
     confirm_password: string;
   }): Promise<AuthResponse> => {
-    return apiRequest<AuthResponse['data']>('/api/auth/register', {
+    const response = await apiRequest<AuthData>('/api/auth/register', {
       method: 'POST',
       body: JSON.stringify(userData),
     });
+    
+    if (response.success && response.data?.token) {
+      localStorage.setItem('auth_token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      if (response.data.role) {
+        localStorage.setItem('user_role', response.data.role);
+      }
+    }
+    
+    return response as AuthResponse;
   },
 
   login: async (credentials: {
     email: string;
     password: string;
   }): Promise<AuthResponse> => {
-    const response = await apiRequest<AuthResponse['data']>('/api/auth/login', {
+    const response = await apiRequest<AuthData>('/api/auth/login', {
       method: 'POST',
       body: JSON.stringify(credentials),
     });
@@ -172,22 +188,30 @@ export const authApi = {
     if (response.success && response.data?.token) {
       localStorage.setItem('auth_token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
+      if (response.data.role) {
+        localStorage.setItem('user_role', response.data.role);
+      }
     }
     
-    return response;
+    return response as AuthResponse;
   },
 
-  getMe: async (): Promise<ApiResponse<User>> => {
-    return apiRequest<User>('/api/auth/me');
+  getMe: async (): Promise<ApiResponse<User & { role?: string }>> => {
+    return apiRequest<User & { role?: string }>('/api/auth/me');
   },
 
   logout: () => {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('user');
+    localStorage.removeItem('user_role');
   },
 
   isLoggedIn: (): boolean => {
     return !!getAuthToken();
+  },
+
+  isAdmin: (): boolean => {
+    return localStorage.getItem('user_role') === 'admin';
   },
 
   getCurrentUser: (): User | null => {
@@ -268,6 +292,23 @@ export const adminApi = {
     });
   },
 
+  getAllBookings: async (params?: {
+    booking_id?: string;
+    date?: string;
+    status?: string;
+    start_date?: string;
+    end_date?: string;
+  }): Promise<ApiResponse<Booking[]>> => {
+    const searchParams = new URLSearchParams();
+    if (params?.booking_id) searchParams.append('booking_id', params.booking_id);
+    if (params?.date) searchParams.append('date', params.date);
+    if (params?.status) searchParams.append('status', params.status);
+    if (params?.start_date) searchParams.append('start_date', params.start_date);
+    if (params?.end_date) searchParams.append('end_date', params.end_date);
+    
+    return apiRequest<Booking[]>(`/api/admin/bookings?${searchParams.toString()}`);
+  },
+
   searchBookings: async (params: {
     booking_id?: string;
     date?: string;
@@ -278,7 +319,29 @@ export const adminApi = {
     if (params.date) searchParams.append('date', params.date);
     if (params.status) searchParams.append('status', params.status);
     
-    return apiRequest<Booking[]>(`/api/admin/bookings/search?${searchParams.toString()}`);
+    return apiRequest<Booking[]>(`/api/admin/bookings?${searchParams.toString()}`);
+  },
+
+  updateBookingStatus: async (
+    bookingId: string,
+    bookingStatus: string,
+    paymentStatus?: string,
+    adminRemarks?: string
+  ): Promise<ApiResponse<Booking>> => {
+    return apiRequest<Booking>(`/api/admin/bookings/${bookingId}/status`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        booking_status: bookingStatus,
+        payment_status: paymentStatus,
+        admin_remarks: adminRemarks,
+      }),
+    });
+  },
+
+  deleteBooking: async (bookingId: string): Promise<ApiResponse<null>> => {
+    return apiRequest(`/api/admin/bookings/${bookingId}`, {
+      method: 'DELETE',
+    });
   },
 
   // Users
@@ -295,9 +358,6 @@ export const adminApi = {
     return apiRequest(`/api/admin/users?${searchParams.toString()}`);
   },
 
-  getUserBookings: async (userId: number): Promise<ApiResponse<{ user: User; bookings: Booking[] }>> => {
-    return apiRequest(`/api/admin/users/${userId}/bookings`);
-  },
 
   // Settings
   getSettings: async (): Promise<ApiResponse<Settings>> => {
@@ -312,16 +372,15 @@ export const adminApi = {
   },
 
   // Rooms
-  createRoom: async (formData: FormData): Promise<ApiResponse<Room>> => {
-    const token = getAuthToken();
-    const response = await fetch(`${API_BASE_URL}/api/admin/rooms`, {
+  getRooms: async (): Promise<ApiResponse<Room[]>> => {
+    return apiRequest<Room[]>('/api/admin/rooms');
+  },
+
+  createRoom: async (roomData: Partial<Room> & { facilities?: { name: string; icon?: string }[] }): Promise<ApiResponse<Room>> => {
+    return apiRequest<Room>('/api/admin/rooms', {
       method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
+      body: JSON.stringify(roomData),
     });
-    return response.json();
   },
 
   updateRoom: async (roomId: number, roomData: Partial<Room>): Promise<ApiResponse<Room>> => {
@@ -353,6 +412,79 @@ export const adminApi = {
     return apiRequest<RoomCategory>('/api/admin/categories', {
       method: 'POST',
       body: JSON.stringify(data),
+    });
+  },
+
+  // Dashboard
+  getDashboardStats: async (): Promise<ApiResponse<any>> => {
+    return apiRequest('/api/admin/dashboard');
+  },
+
+  // Users
+  getUsers: async (params?: {
+    mobile?: string;
+    page?: number;
+    limit?: number;
+  }): Promise<ApiResponse<{ users: User[]; pagination: any }>> => {
+    const searchParams = new URLSearchParams();
+    if (params?.mobile) searchParams.append('mobile', params.mobile);
+    if (params?.page) searchParams.append('page', String(params.page));
+    if (params?.limit) searchParams.append('limit', String(params.limit));
+    
+    return apiRequest(`/api/admin/users?${searchParams.toString()}`);
+  },
+
+  getUserDetails: async (userId: number): Promise<ApiResponse<{ user: User; bookings: Booking[] }>> => {
+    return apiRequest(`/api/admin/users/${userId}`);
+  },
+
+  updateUser: async (userId: number, userData: Partial<User>): Promise<ApiResponse<User>> => {
+    return apiRequest<User>(`/api/admin/users/${userId}`, {
+      method: 'PUT',
+      body: JSON.stringify(userData),
+    });
+  },
+
+  deleteUser: async (userId: number): Promise<ApiResponse<null>> => {
+    return apiRequest(`/api/admin/users/${userId}`, {
+      method: 'DELETE',
+    });
+  },
+
+  // Categories
+  getCategories: async (): Promise<ApiResponse<RoomCategory[]>> => {
+    return apiRequest<RoomCategory[]>('/api/admin/categories');
+  },
+
+  createCategory: async (data: Partial<RoomCategory>): Promise<ApiResponse<RoomCategory>> => {
+    return apiRequest<RoomCategory>('/api/admin/categories', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+
+  updateCategory: async (categoryId: number, data: Partial<RoomCategory>): Promise<ApiResponse<RoomCategory>> => {
+    return apiRequest<RoomCategory>(`/api/admin/categories/${categoryId}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  },
+
+  deleteCategory: async (categoryId: number): Promise<ApiResponse<null>> => {
+    return apiRequest(`/api/admin/categories/${categoryId}`, {
+      method: 'DELETE',
+    });
+  },
+
+  // Settings
+  getSettings: async (): Promise<ApiResponse<Settings>> => {
+    return apiRequest<Settings>('/api/admin/settings');
+  },
+
+  updateSettings: async (settings: Partial<Settings>): Promise<ApiResponse<Settings>> => {
+    return apiRequest<Settings>('/api/admin/settings', {
+      method: 'PUT',
+      body: JSON.stringify(settings),
     });
   },
 
