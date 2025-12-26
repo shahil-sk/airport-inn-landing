@@ -25,17 +25,17 @@ const ContactSection = () => {
     {
       icon: MapPin,
       title: 'Address',
-      content: '123 Forest Road, Near Airport Terminal 2, City Name, State 12345',
+      content: 'Kadiganahalli, Sai Bless, Jala Hobli, Subs Nagar, Chikkajala, Bengaluru, Karnataka 562157',
     },
     {
       icon: Phone,
-      title: 'Phone',
-      content: '+1 234 567 890',
+      title: 'Phone / WhatsApp',
+      content: '+91 8792729715',
     },
     {
       icon: Mail,
       title: 'Email',
-      content: 'reservations@treesuites.com',
+      content: 'dhanuxhai@gmail.com',
     },
     {
       icon: Clock,

@@ -100,19 +100,19 @@ const Footer = () => {
               <li className="flex items-start gap-2 sm:gap-3">
                 <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-gold shrink-0 mt-0.5" />
                 <span className="text-primary-foreground/70 text-sm sm:text-base">
-                  123 Forest Road, Near Airport Terminal 2, City Name, State 12345
+                  Kadiganahalli, Sai Bless, Jala Hobli, Chikkajala, Bengaluru, Karnataka 562157
                 </span>
               </li>
               <li className="flex items-center gap-2 sm:gap-3">
                 <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-gold shrink-0" />
-                <a href="tel:+1234567890" className="text-primary-foreground/70 hover:text-gold transition-colors text-sm sm:text-base">
-                  +1 234 567 890
+                <a href="tel:+918792729715" className="text-primary-foreground/70 hover:text-gold transition-colors text-sm sm:text-base">
+                  +91 8792729715
                 </a>
               </li>
               <li className="flex items-center gap-2 sm:gap-3">
                 <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-gold shrink-0" />
-                <a href="mailto:reservations@treesuites.com" className="text-primary-foreground/70 hover:text-gold transition-colors text-sm sm:text-base break-all">
-                  reservations@treesuites.com
+                <a href="mailto:dhanuxhai@gmail.com" className="text-primary-foreground/70 hover:text-gold transition-colors text-sm sm:text-base break-all">
+                  dhanuxhai@gmail.com
                 </a>
               </li>
             </ul>

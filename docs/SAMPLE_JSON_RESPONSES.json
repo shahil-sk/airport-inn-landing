@@ -1,0 +1,502 @@
+{
+  "auth": {
+    "register": {
+      "success": {
+        "success": true,
+        "message": "Registration successful",
+        "data": {
+          "user_id": 1,
+          "full_name": "John Doe",
+          "email": "john@example.com",
+          "mobile": "9876543210",
+          "created_at": "2025-01-26T10:30:00Z"
+        }
+      },
+      "error_email_exists": {
+        "success": false,
+        "error": "Email already registered"
+      },
+      "error_mobile_exists": {
+        "success": false,
+        "error": "Mobile number already registered"
+      },
+      "error_validation": {
+        "success": false,
+        "error": "Validation error",
+        "details": {
+          "email": "Invalid email format",
+          "password": "Password must be at least 8 characters",
+          "mobile": "Invalid mobile number format"
+        }
+      }
+    },
+    "login": {
+      "success": {
+        "success": true,
+        "message": "Login successful",
+        "data": {
+          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20iLCJpYXQiOjE3MDY0NTEyMDAsImV4cCI6MTcwNjUzNzYwMH0.abc123",
+          "user": {
+            "user_id": 1,
+            "full_name": "John Doe",
+            "email": "john@example.com",
+            "mobile": "9876543210"
+          }
+        }
+      },
+      "error_invalid": {
+        "success": false,
+        "error": "Invalid email or password"
+      }
+    },
+    "me": {
+      "success": {
+        "success": true,
+        "data": {
+          "user_id": 1,
+          "full_name": "John Doe",
+          "email": "john@example.com",
+          "mobile": "9876543210",
+          "created_at": "2025-01-26T10:30:00Z"
+        }
+      },
+      "error_unauthorized": {
+        "success": false,
+        "error": "Invalid or expired token"
+      }
+    }
+  },
+  "rooms": {
+    "list": {
+      "success": true,
+      "data": {
+        "categories": [
+          {
+            "category_id": 1,
+            "name": "Suite Room",
+            "icon": "crown",
+            "description": "Luxurious suite with premium amenities",
+            "total_rooms": 2,
+            "available_rooms": 1,
+            "is_enabled": true,
+            "display_order": 1
+          },
+          {
+            "category_id": 2,
+            "name": "Mini Suite Room",
+            "icon": "star",
+            "description": "Compact luxury with essential amenities",
+            "total_rooms": 2,
+            "available_rooms": 2,
+            "is_enabled": true,
+            "display_order": 2
+          },
+          {
+            "category_id": 3,
+            "name": "Junior Suite Room",
+            "icon": "sparkles",
+            "description": "Perfect blend of comfort and elegance",
+            "total_rooms": 2,
+            "available_rooms": 2,
+            "is_enabled": true,
+            "display_order": 3
+          },
+          {
+            "category_id": 4,
+            "name": "Deluxe AC Room",
+            "icon": "snowflake",
+            "description": "Air-conditioned comfort with modern amenities",
+            "total_rooms": 7,
+            "available_rooms": 5,
+            "is_enabled": true,
+            "display_order": 4
+          },
+          {
+            "category_id": 5,
+            "name": "Deluxe Non AC Room",
+            "icon": "home",
+            "description": "Comfortable budget-friendly accommodation",
+            "total_rooms": 7,
+            "available_rooms": 7,
+            "is_enabled": true,
+            "display_order": 5
+          }
+        ],
+        "rooms": [
+          {
+            "room_id": 1,
+            "room_number": "S101",
+            "title": "Royal Suite",
+            "category_id": 1,
+            "category_name": "Suite Room",
+            "short_tagline": "Couple Friendly | 24x7 WiFi | Food Facility",
+            "price": 5999,
+            "offer_percentage": 20,
+            "final_price": 4799,
+            "thumbnail": "https://api.treesuitesnext.com/uploads/rooms/s101_thumb.jpg",
+            "is_available": true,
+            "is_enabled": true
+          },
+          {
+            "room_id": 2,
+            "room_number": "S102",
+            "title": "Presidential Suite",
+            "category_id": 1,
+            "category_name": "Suite Room",
+            "short_tagline": "Premium | Balcony | Complimentary Breakfast",
+            "price": 6999,
+            "offer_percentage": 15,
+            "final_price": 5949,
+            "thumbnail": "https://api.treesuitesnext.com/uploads/rooms/s102_thumb.jpg",
+            "is_available": false,
+            "is_enabled": true
+          },
+          {
+            "room_id": 3,
+            "room_number": "MS201",
+            "title": "Mini Suite Comfort",
+            "category_id": 2,
+            "category_name": "Mini Suite Room",
+            "short_tagline": "Cozy | WiFi | Room Service",
+            "price": 3999,
+            "offer_percentage": 10,
+            "final_price": 3599,
+            "thumbnail": "https://api.treesuitesnext.com/uploads/rooms/ms201_thumb.jpg",
+            "is_available": true,
+            "is_enabled": true
+          },
+          {
+            "room_id": 7,
+            "room_number": "DAC401",
+            "title": "Deluxe AC Standard",
+            "category_id": 4,
+            "category_name": "Deluxe AC Room",
+            "short_tagline": "AC | WiFi | TV",
+            "price": 2499,
+            "offer_percentage": 10,
+            "final_price": 2249,
+            "thumbnail": "https://api.treesuitesnext.com/uploads/rooms/dac401_thumb.jpg",
+            "is_available": true,
+            "is_enabled": true
+          },
+          {
+            "room_id": 9,
+            "room_number": "DNAC501",
+            "title": "Deluxe Non-AC Standard",
+            "category_id": 5,
+            "category_name": "Deluxe Non AC Room",
+            "short_tagline": "Fan | WiFi | Budget Friendly",
+            "price": 1499,
+            "offer_percentage": 15,
+            "final_price": 1274,
+            "thumbnail": "https://api.treesuitesnext.com/uploads/rooms/dnac501_thumb.jpg",
+            "is_available": true,
+            "is_enabled": true
+          }
+        ]
+      }
+    },
+    "detail": {
+      "success": true,
+      "data": {
+        "room_id": 1,
+        "room_number": "S101",
+        "title": "Royal Suite",
+        "category_id": 1,
+        "category_name": "Suite Room",
+        "short_tagline": "Couple Friendly | 24x7 WiFi | Food Facility",
+        "long_description": "Experience ultimate luxury in our Royal Suite featuring a king-size bed, premium bathroom amenities, city view balcony, and complimentary breakfast. Perfect for couples and business travelers seeking comfort and elegance. The suite includes a separate living area, work desk, and premium entertainment system.",
+        "price": 5999,
+        "offer_percentage": 20,
+        "final_price": 4799,
+        "thumbnail": "https://api.treesuitesnext.com/uploads/rooms/s101_thumb.jpg",
+        "images": [
+          "https://api.treesuitesnext.com/uploads/rooms/s101_1.jpg",
+          "https://api.treesuitesnext.com/uploads/rooms/s101_2.jpg",
+          "https://api.treesuitesnext.com/uploads/rooms/s101_3.jpg",
+          "https://api.treesuitesnext.com/uploads/rooms/s101_4.jpg"
+        ],
+        "facilities": [
+          "King Size Bed",
+          "Air Conditioning",
+          "Free WiFi",
+          "LCD TV",
+          "Mini Bar",
+          "Room Service",
+          "Balcony",
+          "Attached Bathroom",
+          "Hair Dryer",
+          "Iron & Ironing Board"
+        ],
+        "is_available": true
+      }
+    },
+    "not_found": {
+      "success": false,
+      "error": "Room not found"
+    }
+  },
+  "bookings": {
+    "create": {
+      "success": {
+        "success": true,
+        "message": "Booking created successfully",
+        "data": {
+          "booking_id": "TSN20250126001",
+          "room_id": 1,
+          "room_title": "Royal Suite",
+          "room_number": "S101",
+          "check_in": "2025-02-01 14:00",
+          "check_out": "2025-02-03 11:00",
+          "total_nights": 2,
+          "price_per_night": 4799,
+          "total_amount": 9598,
+          "payment_method": "upi",
+          "payment_status": "pending",
+          "booking_status": "pending",
+          "created_at": "2025-01-26T10:45:00Z",
+          "upi_details": {
+            "upi_id": "8792729715-4@ybl",
+            "amount": 9598,
+            "note": "TSN20250126001 - Royal Suite"
+          }
+        }
+      },
+      "error_room_unavailable": {
+        "success": false,
+        "error": "Room is not available for selected dates"
+      },
+      "error_unauthorized": {
+        "success": false,
+        "error": "Please login to make a booking"
+      }
+    },
+    "my_bookings": {
+      "success": true,
+      "data": [
+        {
+          "booking_id": "TSN20250126001",
+          "room_title": "Royal Suite",
+          "room_number": "S101",
+          "category_name": "Suite Room",
+          "thumbnail": "https://api.treesuitesnext.com/uploads/rooms/s101_thumb.jpg",
+          "check_in": "2025-02-01 14:00",
+          "check_out": "2025-02-03 11:00",
+          "total_amount": 9598,
+          "payment_method": "upi",
+          "payment_status": "completed",
+          "booking_status": "confirmed",
+          "created_at": "2025-01-26T10:45:00Z"
+        },
+        {
+          "booking_id": "TSN20250120002",
+          "room_title": "Mini Suite Comfort",
+          "room_number": "MS201",
+          "category_name": "Mini Suite Room",
+          "thumbnail": "https://api.treesuitesnext.com/uploads/rooms/ms201_thumb.jpg",
+          "check_in": "2025-01-25 14:00",
+          "check_out": "2025-01-26 11:00",
+          "total_amount": 3599,
+          "payment_method": "pay_at_property",
+          "payment_status": "completed",
+          "booking_status": "completed",
+          "created_at": "2025-01-20T09:30:00Z"
+        }
+      ]
+    }
+  },
+  "admin": {
+    "pending_bookings": {
+      "success": true,
+      "data": [
+        {
+          "booking_id": "TSN20250126002",
+          "user": {
+            "user_id": 2,
+            "full_name": "Jane Smith",
+            "email": "jane@example.com",
+            "mobile": "9876543211"
+          },
+          "room": {
+            "room_id": 3,
+            "title": "Mini Suite Comfort",
+            "room_number": "MS201",
+            "category_name": "Mini Suite Room"
+          },
+          "check_in": "2025-02-05 14:00",
+          "check_out": "2025-02-06 11:00",
+          "num_adults": 2,
+          "num_minors": 0,
+          "total_amount": 3599,
+          "payment_method": "pay_at_property",
+          "payment_status": "pending",
+          "booking_status": "pending",
+          "created_at": "2025-01-26T11:00:00Z"
+        },
+        {
+          "booking_id": "TSN20250126003",
+          "user": {
+            "user_id": 3,
+            "full_name": "Robert Wilson",
+            "email": "robert@example.com",
+            "mobile": "9876543212"
+          },
+          "room": {
+            "room_id": 7,
+            "title": "Deluxe AC Standard",
+            "room_number": "DAC401",
+            "category_name": "Deluxe AC Room"
+          },
+          "check_in": "2025-02-10 14:00",
+          "check_out": "2025-02-12 11:00",
+          "num_adults": 2,
+          "num_minors": 1,
+          "minor_ages": [8],
+          "total_amount": 4498,
+          "payment_method": "upi",
+          "payment_status": "pending",
+          "booking_status": "pending",
+          "created_at": "2025-01-26T11:30:00Z"
+        }
+      ]
+    },
+    "approve_booking": {
+      "success": {
+        "success": true,
+        "message": "Booking approved successfully",
+        "data": {
+          "booking_id": "TSN20250126002",
+          "booking_status": "confirmed",
+          "updated_at": "2025-01-26T12:00:00Z"
+        }
+      },
+      "reject": {
+        "success": true,
+        "message": "Booking rejected",
+        "data": {
+          "booking_id": "TSN20250126003",
+          "booking_status": "cancelled",
+          "updated_at": "2025-01-26T12:05:00Z"
+        }
+      }
+    },
+    "users": {
+      "success": true,
+      "data": {
+        "users": [
+          {
+            "user_id": 1,
+            "full_name": "John Doe",
+            "email": "john@example.com",
+            "mobile": "9876543210",
+            "total_bookings": 3,
+            "created_at": "2025-01-26T10:30:00Z"
+          },
+          {
+            "user_id": 2,
+            "full_name": "Jane Smith",
+            "email": "jane@example.com",
+            "mobile": "9876543211",
+            "total_bookings": 1,
+            "created_at": "2025-01-25T09:00:00Z"
+          },
+          {
+            "user_id": 3,
+            "full_name": "Robert Wilson",
+            "email": "robert@example.com",
+            "mobile": "9876543212",
+            "total_bookings": 5,
+            "created_at": "2025-01-20T15:30:00Z"
+          }
+        ],
+        "pagination": {
+          "current_page": 1,
+          "total_pages": 5,
+          "total_users": 100
+        }
+      }
+    },
+    "settings": {
+      "get": {
+        "success": true,
+        "data": {
+          "upi_id": "8792729715-4@ybl",
+          "whatsapp_number": "+918792729715",
+          "phone_number": "+918792729715",
+          "email": "dhanuxhai@gmail.com"
+        }
+      },
+      "update": {
+        "success": true,
+        "message": "Settings updated successfully",
+        "data": {
+          "upi_id": "8792729715-4@ybl",
+          "whatsapp_number": "+918792729715",
+          "phone_number": "+918792729715",
+          "email": "dhanuxhai@gmail.com",
+          "updated_at": "2025-01-26T12:30:00Z"
+        }
+      }
+    },
+    "reports": {
+      "bookings": {
+        "success": true,
+        "data": {
+          "summary": {
+            "total_bookings": 45,
+            "confirmed": 38,
+            "pending": 5,
+            "cancelled": 2,
+            "total_revenue": 185000
+          },
+          "bookings": [
+            {
+              "booking_id": "TSN20250126001",
+              "guest_name": "John Doe",
+              "room_title": "Royal Suite",
+              "check_in": "2025-02-01",
+              "check_out": "2025-02-03",
+              "amount": 9598,
+              "status": "confirmed"
+            },
+            {
+              "booking_id": "TSN20250125001",
+              "guest_name": "Jane Smith",
+              "room_title": "Mini Suite Comfort",
+              "check_in": "2025-01-28",
+              "check_out": "2025-01-29",
+              "amount": 3599,
+              "status": "confirmed"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "errors": {
+    "bad_request": {
+      "success": false,
+      "error": "Validation error",
+      "details": {
+        "email": "Invalid email format",
+        "password": "Password must be at least 8 characters"
+      }
+    },
+    "unauthorized": {
+      "success": false,
+      "error": "Invalid or expired token"
+    },
+    "forbidden": {
+      "success": false,
+      "error": "Admin access required"
+    },
+    "not_found": {
+      "success": false,
+      "error": "Resource not found"
+    },
+    "server_error": {
+      "success": false,
+      "error": "Internal server error"
+    }
+  }
+}
